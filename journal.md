@@ -2,6 +2,15 @@
 
 ## 2022-08-09
 
+### 22:55
+
+Hab jetzt auch die GET-Routen für die Stores fertig. Ich musste mich in einigen
+Dingen immer noch orientieren, muss mitdenken, nach-denken, immer neu durchleben,
+aber es lohnt sich. Flask war schon immer genau das, was ich als Backend für meine
+Frontend-Pläne brauchte, und mit TDD kann ich mich auch noch bei jedem Schritt,
+den ich mache, sicher fühlen.
+
+
 ### 18:55
 
 Hab die erste POST-Route fertig. TDD macht Spaß und vertieft das Gelernte sehr,

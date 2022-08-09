@@ -53,7 +53,7 @@ def test_add_store(test_client):
     assert response.json['data']['name'] == 'zingboffle'
     assert response.json['message'] == "Successfully added!"
 
-def test_get_store_by_name(test_client):
+def test_get_store_by_id(test_client):
     """
     GIVEN a flask app has been provided
     WHEN we GET a store using '/stores/:id'
@@ -64,18 +64,20 @@ def test_get_store_by_name(test_client):
     Args:
         test_client (Object): Flask app object
     """
-    # response = test_client.get('/stores')
-    pass
+    response = test_client.get('/stores/aaa')
+    assert response.status_code == 200
+    assert response.json['name'] == "first_store"
+    
 
-def test_get_store_by_name__fail(test_client):
+def test_get_store_by_id__fail(test_client):
     """
     GIVEN a flask app has been provided
     WHEN we GET a store using '/stores/:name'
-    AND the store could not found in the backend
+    AND the store could not be found in the backend
     THEN the response status is 204 ("No content")
-    AND we get an error message
 
     Args:
         test_client (Object): Flask app object
     """
-    pass
+    response = test_client.get('/stores/xxx')
+    assert response.status_code == 204
