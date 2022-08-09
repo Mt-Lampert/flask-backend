@@ -2,7 +2,8 @@ from flask import Flask, jsonify, request
 
 stores = [
     {
-        'name': "My wonderful store",
+        'id': 'aaa',
+        'name': "first_store",
         'items': [
             {
                 'name': 'My Item',
@@ -28,6 +29,7 @@ def default_app():
     def add_store():
         req_data = request.get_json()
         new_store = {
+            'id': 'zza',
             'name': req_data['name'],
             'items': req_data['items']
         }

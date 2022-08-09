@@ -56,7 +56,7 @@ def test_add_store(test_client):
 def test_get_store_by_name(test_client):
     """
     GIVEN a flask app has been provided
-    WHEN we GET a store using '/stores/:name'
+    WHEN we GET a store using '/stores/:id'
     AND the store has been found in the backend
     THEN the response status is OK
     AND the response data returns the store we want
@@ -64,6 +64,7 @@ def test_get_store_by_name(test_client):
     Args:
         test_client (Object): Flask app object
     """
+    # response = test_client.get('/stores')
     pass
 
 def test_get_store_by_name__fail(test_client):
