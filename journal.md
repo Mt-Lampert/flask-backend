@@ -1,5 +1,21 @@
 # Journal für den Flask REST API Kurs
 
+## 2022-08-09
+
+### 18:55
+
+Hab die erste POST-Route fertig. TDD macht Spaß und vertieft das Gelernte sehr,
+auch wenn der Weg zum Ergebnis anspruchsvoller ist.
+
+Ein Problem gibt es aber: Durch das Hinzufügen neuer _stores_ zur store-Liste
+verändert sich die store-Liste auch im laufenden Testbetrieb. Das hat im
+Moment noch keine negativen Auswirkungen, weil ich meine Tests so schreibe, 
+dass sie immer funktionieren. Ich weiß aber nicht, wie lange ich das noch 
+durchhalten kann.
+
+
+
+
 ## 2022-08-08 
 
 ### 19:20

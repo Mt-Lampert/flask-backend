@@ -12,7 +12,7 @@ def test_rootendpoint(test_client):
     assert 'flaskers' in response.json['message']
     assert 'Hallo' not in response.json['message']
 
-def test_stores_endpoint(test_client):
+def test_get_stores(test_client):
     """
     GIVEN a flask app has been provided
     WHEN we GET the '/stores' endpoint
@@ -27,3 +27,54 @@ def test_stores_endpoint(test_client):
     assert response.status_code == 200
     assert isinstance(response.json, list)
     assert len(response.json) > 0
+    
+def test_add_store(test_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we POST a new store to the '/stores' endpoint
+    THEN the response status is OK
+    AND the response data returns the post we sent
+    AND we additionally receive a success message
+
+    Args:
+        test_client (Object): Flask app object
+    """
+    response = test_client.post('/stores', json={
+        'name': 'zingboffle', 
+        'items': [
+            {
+                'name': "Fake Diamond",
+                'price': 99.99
+            }
+        ]
+    })
+    
+    assert response.status_code == 200
+    assert response.json['data']['name'] == 'zingboffle'
+    assert response.json['message'] == "Successfully added!"
+
+def test_get_store_by_name(test_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we GET a store using '/stores/:name'
+    AND the store has been found in the backend
+    THEN the response status is OK
+    AND the response data returns the store we want
+
+    Args:
+        test_client (Object): Flask app object
+    """
+    pass
+
+def test_get_store_by_name__fail(test_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we GET a store using '/stores/:name'
+    AND the store could not found in the backend
+    THEN the response status is 204 ("No content")
+    AND we get an error message
+
+    Args:
+        test_client (Object): Flask app object
+    """
+    pass
