@@ -68,7 +68,6 @@ def test_get_store_by_id(test_client):
     assert response.status_code == 200
     assert response.json['name'] == "first_store"
     
-
 def test_get_store_by_id__fail(test_client):
     """
     GIVEN a flask app has been provided
@@ -80,4 +79,33 @@ def test_get_store_by_id__fail(test_client):
         test_client (Object): Flask app object
     """
     response = test_client.get('/stores/xxx')
+    assert response.status_code == 204
+
+def test_get_items_by_store_id(test_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we GET a store using '/stores/:name'
+    AND the store could not be found in the backend
+    THEN the response status is 204 ("No content")
+
+    Args:
+        test_client (Object): Flask app object
+    """
+    response = test_client.get('/stores/aaa/items')
+    assert response.status_code == 200
+    assert isinstance(response.json, list)
+    assert len(response.json) > 0
+    assert response.json[0]['price'] == 15.99
+
+def test_get_items_by_store_id__fail(test_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we GET the items from a store using '/stores/:name/items'
+    AND the store could not be found in the backend
+    THEN the response status is 204 ("No content")
+
+    Args:
+        test_client (Object): Flask app object
+    """
+    response = test_client.get('/stores/xxx/items')
     assert response.status_code == 204

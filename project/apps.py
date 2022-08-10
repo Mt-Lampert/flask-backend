@@ -34,6 +34,15 @@ def default_app():
         # implicit else => not found: status == 204, no 
         return '', 204
 
+    @myApp.route('/stores/<string:id>/items')
+    def get_items_by_store_id(id):
+        for store in stores:
+            if store['id'] == id:
+                return jsonify(store['items'])
+
+        # implicit else => not found: status == 204, no content
+        return '', 204
+
     @myApp.route('/stores', methods=["POST"])
     def add_store():
         req_data = request.get_json()
