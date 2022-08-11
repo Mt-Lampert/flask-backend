@@ -1,5 +1,34 @@
 # Journal für den Flask REST API Kurs
 
+TODO: 
+
+- [ ] einen neuen Git Branch einrichten: _flask\_restful._
+- [ ] `flask_restful` installieren.
+- [ ] In `apps.py` eine neue Factory ausbrüten, die auf `flask_restful` Rücksicht
+  nimmt.
+- [ ] Die Routen nach und nach Richtung flask_restful umstellen
+- [ ] Den _flask\_restful_ branch in _master_ integrieren.
+
+
+## 2022-08-11
+
+Nach Durchsicht von Kapitel 3 und 4 musste ich mir überlegen, wie es mit diesem
+Projekt weitergehen soll
+
+Im Kurs wird das Projekt umgestellt auf `flask_restful`. Die Routen und die ganze
+Architektur ändert sich damit. Ich habe mich deshalb geweigert, weiter zu arbeiten,
+weil ich kein gutes Gefühl bei der Arbeit hatte.
+
+Jetzt habe ich wieder ein gutes Gefühl, weil ich nachgedacht habe und zu einer 
+Entscheidung gekommen bin.
+
+> Ich werde in Git einen neuen Branch eröffnen, die bestehenden Tests beibehalten
+> und die Migration nach `flask_restful` als riesengroßes Refactoring betrachten.
+
+Die Tests müssen genau so funktionieren wie sie vorher schon funktionieren. Dann
+ist die Migration erfolgreich.
+
+
 ## 2022-08-09
 
 ### 22:55
