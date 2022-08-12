@@ -2,12 +2,22 @@
 
 TODO: 
 
-- [ ] einen neuen Git Branch einrichten: _flask\_restful._
-- [ ] `flask_restful` installieren.
-- [ ] In `apps.py` eine neue Factory ausbrüten, die auf `flask_restful` Rücksicht
+- [x] einen neuen Git Branch einrichten: _flask\_restful._
+- [x] `flask_restful` installieren.
+- [x] In `apps.py` eine neue Factory ausbrüten, die auf `flask_restful` Rücksicht
   nimmt.
 - [ ] Die Routen nach und nach Richtung flask_restful umstellen
 - [ ] Den _flask\_restful_ branch in _master_ integrieren.
+
+## 2022-08-12
+
+## 08:55
+Der Plan von gestern ist voll aufgegangen! Ich habe gerade eben die Umstellug
+eingeleitet und den ersten Test auf _restful\_client_ umgestellt. Der Test
+war positiv. Es ist der gleiche Test wie vorher, nur der Weg zur Response war
+ein anderer.
+
+Wie Nero Wolfe sagen würde: "Höchst zufriedenstellend!"
 
 
 ## 2022-08-11

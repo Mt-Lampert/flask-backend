@@ -1,20 +1,22 @@
-from flask import Flask, abort, jsonify, request
-
-stores = [
-    {
-        'id': 'aaa',
-        'name': "first_store",
-        'items': [
-            {
-                'name': 'My Item',
-                'price': 15.99,
-            }
-        ]
-    }
-]
+from flask import Flask, jsonify, request
+from flask_restful import Api
+from .resources import Home
 
 
 def default_app():
+    stores = [
+        {
+            'id': 'aaa',
+            'name': "first_store",
+            'items': [
+                {
+                    'name': 'My Item',
+                    'price': 15.99,
+                }
+            ]
+        }
+    ]
+
     myApp = Flask(__name__)
 
     @myApp.route('/')
@@ -31,7 +33,7 @@ def default_app():
             if store['id'] == id:
                 return jsonify(store)
 
-        # implicit else => not found: status == 204, no 
+        # implicit else => not found: status == 204, no
         return '', 204
 
     @myApp.route('/stores/<string:id>/items')
@@ -61,3 +63,14 @@ def default_app():
         return jsonify(myResponse)
 
     return myApp
+
+
+def restful_app():
+    myApp = Flask(__name__)
+    myApi = Api(myApp)
+    
+    # Set up the resources
+    myApi.add_resource(Home, '/')
+
+    return myApp
+

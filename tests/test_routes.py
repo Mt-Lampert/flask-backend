@@ -1,5 +1,5 @@
 
-def test_rootendpoint(test_client):
+def test_rootendpoint(restful_client):
     """
     GIVEN a default app has been provided
     WHEN we GET the '/' endpoint
@@ -7,7 +7,7 @@ def test_rootendpoint(test_client):
     AND we find 'flaskers' in the response
     AND we won't find 'Hallo' in the response
     """
-    response = test_client.get('/')
+    response = restful_client.get('/')
     assert response.status_code == 200
     assert 'flaskers' in response.json['message']
     assert 'Hallo' not in response.json['message']
@@ -71,7 +71,7 @@ def test_get_store_by_id(test_client):
 def test_get_store_by_id__fail(test_client):
     """
     GIVEN a flask app has been provided
-    WHEN we GET a store using '/stores/:name'
+    WHEN we GET a store using '/stores/:id'
     AND the store could not be found in the backend
     THEN the response status is 204 ("No content")
 
