@@ -48,10 +48,46 @@ def test_add_store(restful_client):
     assert response.json['data']['name'] == 'zingboffle'
     assert response.json['message'] == "Successfully added!"
 
+def test_add_store__name_fail(restful_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we POST a new item to the '/item' endpoint
+    AND the new item lacks a 'name' field
+    THEN the response status is 404
+    AND we get an error message
+
+    Args:
+        restful_client (Object): Flask app object
+    """
+    response = restful_client.post('/items', json={
+        'price': 49.99
+    })
+    assert response.status_code == 400
+    assert response.json['message']['name'] == "is required"
+
+def test_add_store__price_fail(restful_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we POST a new item to the '/item' endpoint
+    AND the new item has an invalid 'price' field
+    THEN the response status is 404
+    AND we get an error message
+
+    Args:
+        restful_client (Object): Flask app object
+    """
+    response = restful_client.post('/items', json={
+        'name': "Zingel",
+        'price': 'wtf'
+    })
+    assert response.status_code == 400
+    assert 'float' in response.json['message']['price'] 
+
+
 def test_get_item_by_id(restful_client):
     """
     GIVEN a flask app has been provided
-    WHEN we GET a store using '/stores/:id'
+    WHEN we GET a store using '/item/:id'
     AND the store has been found in the backend
     THEN the response status is OK
     AND the response data returns the store we want
@@ -66,12 +102,12 @@ def test_get_item_by_id(restful_client):
 def test_get_store_by_id__fail(restful_client):
     """
     GIVEN a flask app has been provided
-    WHEN we GET a store using '/items/:id'
+    WHEN we GET a store using '/item/:id'
     AND the store could not be found in the backend
     THEN the response status is 404 ("Not found")
 
     Args:
         restful_client (Object): Flask app object
     """
-    response = restful_client.get('/stores/xxx')
+    response = restful_client.get('/item/xxx')
     assert response.status_code == 404
