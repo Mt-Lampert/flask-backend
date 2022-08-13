@@ -12,48 +12,43 @@ def test_rootendpoint(restful_client):
     assert 'flaskers' in response.json['message']
     assert 'Hallo' not in response.json['message']
 
-def test_get_stores(test_client):
+def test_get_items(restful_client):
     """
     GIVEN a flask app has been provided
-    WHEN we GET the '/stores' endpoint
+    WHEN we GET the '/items' endpoint
     THEN the response status is OK
     AND the response data is a list
     AND the list is not empty  
 
     Args:
-        test_client (Object): Flask app object
+        restful_client (Object): Flask app object
     """
-    response = test_client.get('/stores')
+    response = restful_client.get('/items')
     assert response.status_code == 200
     assert isinstance(response.json, list)
     assert len(response.json) > 0
     
-def test_add_store(test_client):
+def test_add_store(restful_client):
     """
     GIVEN a flask app has been provided
-    WHEN we POST a new store to the '/stores' endpoint
+    WHEN we POST a new item to the '/item' endpoint
     THEN the response status is OK
     AND the response data returns the post we sent
     AND we additionally receive a success message
 
     Args:
-        test_client (Object): Flask app object
+        restful_client (Object): Flask app object
     """
-    response = test_client.post('/stores', json={
+    response = restful_client.post('/items', json={
         'name': 'zingboffle', 
-        'items': [
-            {
-                'name': "Fake Diamond",
-                'price': 99.99
-            }
-        ]
+        'price': 49.99
     })
     
     assert response.status_code == 200
     assert response.json['data']['name'] == 'zingboffle'
     assert response.json['message'] == "Successfully added!"
 
-def test_get_store_by_id(test_client):
+def test_get_item_by_id(restful_client):
     """
     GIVEN a flask app has been provided
     WHEN we GET a store using '/stores/:id'
@@ -62,50 +57,21 @@ def test_get_store_by_id(test_client):
     AND the response data returns the store we want
 
     Args:
-        test_client (Object): Flask app object
+        restful_client (Object): Flask app object
     """
-    response = test_client.get('/stores/aaa')
+    response = restful_client.get('/item/aaa')
     assert response.status_code == 200
-    assert response.json['name'] == "first_store"
+    assert response.json['name'] == "first_item"
     
-def test_get_store_by_id__fail(test_client):
+def test_get_store_by_id__fail(restful_client):
     """
     GIVEN a flask app has been provided
-    WHEN we GET a store using '/stores/:id'
+    WHEN we GET a store using '/items/:id'
     AND the store could not be found in the backend
-    THEN the response status is 204 ("No content")
+    THEN the response status is 404 ("Not found")
 
     Args:
-        test_client (Object): Flask app object
+        restful_client (Object): Flask app object
     """
-    response = test_client.get('/stores/xxx')
-    assert response.status_code == 204
-
-def test_get_items_by_store_id(test_client):
-    """
-    GIVEN a flask app has been provided
-    WHEN we GET a store using '/stores/:name'
-    AND the store could not be found in the backend
-    THEN the response status is 204 ("No content")
-
-    Args:
-        test_client (Object): Flask app object
-    """
-    response = test_client.get('/stores/aaa/items')
-    assert response.status_code == 200
-    assert isinstance(response.json, list)
-    assert len(response.json) > 0
-    assert response.json[0]['price'] == 15.99
-
-def test_get_items_by_store_id__fail(test_client):
-    """
-    GIVEN a flask app has been provided
-    WHEN we GET the items from a store using '/stores/:name/items'
-    AND the store could not be found in the backend
-    THEN the response status is 204 ("No content")
-
-    Args:
-        test_client (Object): Flask app object
-    """
-    response = test_client.get('/stores/xxx/items')
-    assert response.status_code == 204
+    response = restful_client.get('/stores/xxx')
+    assert response.status_code == 404

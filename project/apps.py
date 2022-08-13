@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_restful import Api
-from .resources import Home
+from .resources import Home, Item, Items
 
 
 def default_app():
@@ -71,6 +71,8 @@ def restful_app():
     
     # Set up the resources
     myApi.add_resource(Home, '/')
+    myApi.add_resource(Items, '/items')
+    myApi.add_resource(Item, '/item/<string:id>')
 
     return myApp
 

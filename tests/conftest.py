@@ -11,7 +11,7 @@ def test_client():
     # with yield, cleanup is possible after yielding ;)
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture()
 def restful_client():
     myApp = restful_app()
     with myApp.test_client() as restful_client:
