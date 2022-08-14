@@ -53,3 +53,9 @@ class Item(Resource):
             return theItemList[0]
 
         return None, 404
+
+    def delete(self, id):
+        global items
+        theItemList = [item for item in items if item['id'] != id]
+        items = theItemList
+        return { "message": "successfully deleted!"}

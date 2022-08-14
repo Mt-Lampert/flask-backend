@@ -9,6 +9,23 @@ TODO:
 - [x] Die Routen nach und nach Richtung `flask_restful` umstellen
 - [ ] Den _flask\_restful_ branch in _master_ integrieren.
 
+
+## 2022-08-14
+
+### 07:40
+
+Habe DELETE zur den _items_-Routen hinzugefügt. Jetzt hab ich aber ein Problem: 
+_Heisenbugs,_, d.h. durch den Umstand, dass ich teste, verändere ich die 
+Testumgebung so, dass neue Tests fehlerhafte Ergebnisse liefern.
+
+Grund ist der Umstand, dass ich nicht bei jedem Test mit einem "frischen" 
+_item-_set beginne, sondern mit einem Set, dass durch vorangegangene Tests
+schon erweitert/geändert -- auf jeden Fall anders ist.  Da muss ich mir was 
+einfallen lassen.
+
+Idee: Eine `reset_items()`-Funktion schreiben und sie nach dem `yield` als
+cleanup aufrufen.
+
 ## 2022-08-13
 
 ### 08:15

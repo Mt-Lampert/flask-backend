@@ -111,3 +111,26 @@ def test_get_store_by_id__fail(restful_client):
     """
     response = restful_client.get('/item/xxx')
     assert response.status_code == 404
+
+def test_delete_item_by_id(restful_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we DELETE an item using '/item/:id'
+    AND the store could be found in the backend
+    THEN the response status is 200 
+    Args:
+        restful_client (Object): Flask app object
+    """
+    response = restful_client.delete('/item/aab')
+    assert response.status_code == 200
+
+    """
+    GIVEN an item has been deleted
+    WHEN we GET the items using '/items'
+    THEN the status is 200
+    AND the item list has only one element.
+    """
+    list_response = restful_client.get('/items')
+    assert list_response.status_code == 200
+    assert len(list_response.json) == 1
+    assert list_response.json[0]['id'] == 'aaa'
