@@ -1,5 +1,4 @@
-from curses import newwin
-import string
+# import string
 from flask_restful import Resource, reqparse
 
 parser = reqparse.RequestParser()
@@ -20,6 +19,21 @@ items = [
         'price': 99.99,
     },
 ]
+
+def reset_items():
+    global items 
+    items = [
+        {
+            'id': 'aaa',
+            'name': 'first_item',
+            'price': 12.99,
+        },
+        {
+            'id': 'aab',
+            'name': "second_item",
+            'price': 99.99,
+        },
+    ]
 
 
 class Home(Resource):

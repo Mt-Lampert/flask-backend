@@ -12,6 +12,12 @@ TODO:
 
 ## 2022-08-14
 
+### 08:03
+
+Die Idee von vorhin ist voll aufgegangen! Hab sie umgesetzt, und alle Tests 
+funktionieren wieder störungsfrei!
+
+
 ### 07:40
 
 Habe DELETE zur den _items_-Routen hinzugefügt. Jetzt hab ich aber ein Problem: 
