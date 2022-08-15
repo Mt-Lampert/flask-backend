@@ -134,3 +134,45 @@ def test_delete_item_by_id(restful_client):
     assert list_response.status_code == 200
     assert len(list_response.json) == 1
     assert list_response.json[0]['id'] == 'aaa'
+
+def test_update_item_by_id(restful_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we PUT an update item to '/item/:id'
+    AND the item with the :id exists in the backend
+    THEN the response status is 200
+    AND we get a success message
+    """
+    updateData = {
+        'price': 29.99
+    }
+    response = restful_client.put("/item/aab", json=updateData)
+    assert response.status_code == 200
+
+    """
+    GIVEN item with ID 'abb' has been updated
+    WHEN we GET the item using '/item/:id'
+    THEN the response status is 200
+    AND item['price'] is 29.99
+    """
+    response = restful_client.get("/item/aab")
+    assert response.json['price'] == 29.99
+
+def test_update_item_by_id__fail(restful_client):
+    """
+    GIVEN a flask app has been provided
+    WHEN we PUT an update item to '/item/:id'
+    AND the item with the :id does not exist in the backend
+    THEN the response status is 404
+    AND we get an error message
+    """
+    updateData = {
+        'price': 29.99
+    }
+    response = restful_client.put("/item/xxx", json=updateData)
+    assert response.status_code == 404
+    assert "could not be updated" in response.json['error'] 
+
+
+
+

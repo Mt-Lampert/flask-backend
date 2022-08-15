@@ -1,4 +1,5 @@
 # import string
+from flask import request
 from flask_restful import Resource, reqparse
 
 parser = reqparse.RequestParser()
@@ -73,3 +74,15 @@ class Item(Resource):
         theItemList = [item for item in items if item['id'] != id]
         items = theItemList
         return { "message": "successfully deleted!"}
+
+    def put(self, id):
+        global items
+        data = request.get_json()
+        foundItems = [item for item in items if item['id'] == id]
+        if len(foundItems) > 0:
+            theItem = foundItems[0]
+            theItem.update(data)
+            return { 'message': "Update successful!"}
+
+        return { 'error': f"item '{id}' could not be updated!"}, 404
+        
