@@ -78,9 +78,9 @@ class Item(Resource):
     def put(self, id):
         global items
         data = request.get_json()
-        foundItems = [item for item in items if item['id'] == id]
-        if len(foundItems) > 0:
-            theItem = foundItems[0]
+       
+        theItem = next((item for item in items if item['id'] == id), None)
+        if theItem:
             theItem.update(data)
             return { 'message': "Update successful!"}
 

@@ -171,7 +171,7 @@ def test_update_item_by_id__fail(restful_client):
     }
     response = restful_client.put("/item/xxx", json=updateData)
     assert response.status_code == 404
-    assert "could not be updated" in response.json['error'] 
+    assert "'xxx' could not be updated" in response.json['error'] 
 
 
 
