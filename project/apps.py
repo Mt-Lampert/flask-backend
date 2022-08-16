@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
+from flask_jwt import JWT
 from flask_restful import Api
 from .resources import Home, Item, Items
+from .auth import authenticate, identity
 
 
 def default_app():
@@ -67,7 +69,12 @@ def default_app():
 
 def restful_app():
     myApp = Flask(__name__)
+
+    myApp.config['SECRET_KEY'] = "r3a11yTOp53cr3T"
+
     myApi = Api(myApp)
+
+    jwt = JWT(myApp, authenticate, identity)
     
     # Set up the resources
     myApi.add_resource(Home, '/')
