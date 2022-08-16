@@ -2,22 +2,109 @@
 
 TODO: 
 
-- [] einen neuen Git Branch einrichten: _jwt-auth_
-- [] JWT installlieren
-- [] Im `project` package eine Datei `auth.py` einrichten 
-- [] in `auth.py` Users und JWT implementieren
-- [] den JW-Token für User 'Mario' mit `http` ermitteln und in der Datei .env speichern.
-- [] JWT-Verhalten von `flask-jwt` so weit studieren, dass wir Tests schreiben können.
+- [x] einen neuen Git Branch einrichten: _jwt-auth_
+- [x] JWT installlieren
+- [x] Im `project` package eine Datei `auth.py` einrichten 
+- [x] in `auth.py` Users und JWT implementieren
+- [x] den JW-Token für User 'Mario' mit `http` ermitteln und in der Datei .env speichern.
+- [ ] JWT-Verhalten von `flask-jwt` so weit studieren, dass wir Tests schreiben können.
      - [offizielle Doku](https://pythonhosted.org/Flask-JWT/)
      - [http-jwt-auth](https://github.com/teracyhq/httpie-jwt-auth) als Erweiterung für
        _httpie_ installieren.
      - __Recherche-Ergebnis:__ unautorisierter Zugriff erzeugt einen 401-Error (error: "Authorization required")
-- [] Tests konzipieren und schreiben
-- [] in `resources.py` eine neue Ressource `SecretItems` und `SecretItem` implementieren
-- [] die Route Handler von `SecretItems` und `SecretItem` an JWT binden
-- [] Die Routen für `SecretItems` bzw `SecretItem`
-- [] Den _flask\_restful_ branch in _master_ integrieren.
+- [ ] Tests konzipieren und schreiben
+- [ ] in `resources.py` eine neue Ressource `SecretItems` und `SecretItem` implementieren
+- [ ] die Route Handler von `SecretItems` und `SecretItem` an JWT binden
+- [ ] Die Routen für `SecretItems` bzw `SecretItem`
+- [ ] Den _flask\_restful_ branch in _master_ integrieren.
 
+
+## 2022-08-16
+
+### 16:30
+
+Ich habe mit dem Mocking von `@jwt_required` weitergeforscht. Dabei habe ich folgende 
+Entdeckung gemacht:
+
+Im package _flask\_jwt_ findet sich in der Datei `__init.py__` die funktion 
+`_jwt_required()`. In der _function description_ steht:
+
+> Does the actual work of verifying the JWT data in the current request. \
+> This is done automatically for you by `@jwt_required()` but you could call it manually.\
+> Doing so would be useful in the context of optional JWT access in your APIs.
+
+Das heißt nichts anderes als dass das die Funktion ist, die wir mocken müssen.
+
+Das einzige, was sie tut, ist entweder Errors auswerfen oder mit folgender Zeile im 
+Request-Kontext einen Wert zuweisen:
+
+```py
+from flask import _request_ctx_stack
+
+def _jwt_required(realm):
+   # throwing errors
+   _request_ctx_stack.top.current_identity = identity = _jwt.identity_callback(payload)
+```
+
+Eine Mock-Funktion könnte so aussehen:
+
+```py
+from flask import _request_ctx_stack
+
+def _jwt_required_mock(realm):
+   # never throwing errors
+   _request_ctx_stack.top.current_identity = identity = User(1, "Mario", "s3cr3t")
+```
+
+
+Im Test können wir sie dann wie folgt patchen:
+
+```py
+test__mock_jwt_required(mocker):
+      mocker.patch(_jwt_required, side_effect=_jwt_required_mock)
+```
+
+Das ganze "Verdrahten" muss natürlich auch noch stimmen, aber so könnte es tatsächlich gehen.
+
+Aber vielleicht ist das mit dem _side\_effect_ auch gar nicht nötig. Wenn gesicherte Routen
+automatisch freigeschaltet sind in dem Moment, wo keine Errors ausgeworfen werden, genügt auch
+dieses Mocking
+
+```py
+test__mock_jwt_required(mocker):
+      mocker.patch(_jwt_required)
+```
+
+### 10:50
+
+Hab JWT in das Projekt integriert bekommen. Hurra!  Allerdings gab es besondere Vorkommnisse:
+
+1. ich musste im Quellcode von `flask_jwt` an zwei Stellen eine kleine Klarstellung 
+   vornehmen, und zwar im Verzeichnis `.venv/lib/python3.10/site_packages/jwt/`, dort
+   in den Dateien `api_jwt.py` und `api_jws.py`
+
+   ```py
+   # vor der Änderung
+   from collections import Mapping
+   # nach der Änderung
+   from collections.abc import Mapping
+   ```
+   
+   Das ist nötig geworden, weil es in Python 3.10 nicht mehr genügt, etwas
+   aus dem eigenen _package_ zu importieren -- es muss auch das Modul mit
+   dabei stehen.
+
+0. JWT und Authentifizierung brauchen wir nicht testen. Das ist Sache der
+   Paket-Entwickler.
+
+0. Problem: Test von Route-Handlern, die mit `@jwt_required` geschützt sind.
+   Hier soll Mocking helfen. Die Kundigen bei _stackoverflow_ empfehlen, die
+   Funktion zu mocken, die für die Überprüfung des Tokens zuständig ist. 
+   Im Falle von `flask_jwt_extended` würde das so aussehen:
+
+   ```py
+   mocker.patch(flask_jwt_extended.view_decorators.verify_jwt_in_request)
+   ```
 
 ## 2022-08-14
 
