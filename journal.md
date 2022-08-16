@@ -2,12 +2,21 @@
 
 TODO: 
 
-- [x] einen neuen Git Branch einrichten: _flask\_restful._
-- [x] `flask_restful` installieren.
-- [x] In `apps.py` eine neue Factory ausbrüten, die auf `flask_restful` Rücksicht
-  nimmt.
-- [x] Die Routen nach und nach Richtung `flask_restful` umstellen
-- [ ] Den _flask\_restful_ branch in _master_ integrieren.
+- [] einen neuen Git Branch einrichten: _jwt-auth_
+- [] JWT installlieren
+- [] Im `project` package eine Datei `auth.py` einrichten 
+- [] in `auth.py` Users und JWT implementieren
+- [] den JW-Token für User 'Mario' mit `http` ermitteln und in der Datei .env speichern.
+- [] JWT-Verhalten von `flask-jwt` so weit studieren, dass wir Tests schreiben können.
+     - [offizielle Doku](https://pythonhosted.org/Flask-JWT/)
+     - [http-jwt-auth](https://github.com/teracyhq/httpie-jwt-auth) als Erweiterung für
+       _httpie_ installieren.
+     - __Recherche-Ergebnis:__ unautorisierter Zugriff erzeugt einen 401-Error (error: "Authorization required")
+- [] Tests konzipieren und schreiben
+- [] in `resources.py` eine neue Ressource `SecretItems` und `SecretItem` implementieren
+- [] die Route Handler von `SecretItems` und `SecretItem` an JWT binden
+- [] Die Routen für `SecretItems` bzw `SecretItem`
+- [] Den _flask\_restful_ branch in _master_ integrieren.
 
 
 ## 2022-08-14
