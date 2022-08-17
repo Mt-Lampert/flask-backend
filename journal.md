@@ -7,16 +7,26 @@ TODO:
 - [x] Im `project` package eine Datei `auth.py` einrichten 
 - [x] in `auth.py` Users und JWT implementieren
 - [x] den JW-Token für User 'Mario' mit `http` ermitteln und in der Datei .env speichern.
-- [ ] JWT-Verhalten von `flask-jwt` so weit studieren, dass wir Tests schreiben können.
+- [x] JWT-Verhalten von `flask-jwt` so weit studieren, dass wir Tests schreiben können.
      - [offizielle Doku](https://pythonhosted.org/Flask-JWT/)
      - [http-jwt-auth](https://github.com/teracyhq/httpie-jwt-auth) als Erweiterung für
        _httpie_ installieren.
      - __Recherche-Ergebnis:__ unautorisierter Zugriff erzeugt einen 401-Error (error: "Authorization required")
-- [ ] Tests konzipieren und schreiben
-- [ ] in `resources.py` eine neue Ressource `SecretItems` und `SecretItem` implementieren
-- [ ] die Route Handler von `SecretItems` und `SecretItem` an JWT binden
-- [ ] Die Routen für `SecretItems` bzw `SecretItem`
+- [x] Tests konzipieren und schreiben
+- [x] in `resources.py` eine neue Ressource `SecretItems` und `SecretItem` implementieren
+- [x] die Route Handler von `SecretItems` und `SecretItem` an JWT binden
+- [x] Die Routen für `SecretItems` bzw `SecretItem` deklarieren und testen.
 - [ ] Den _flask\_restful_ branch in _master_ integrieren.
+
+
+## 2022-08-17
+
+### 17:35
+
+Ich habe das mit dem Mocken von JWT hinbekommen. Es war am Ende super einfach. Die 
+entscheidenden Punkte stehen alle in `test_jwt_auth.py`!
+
+Ich fühl mich wie ein Torschütze im Fußball!
 
 
 ## 2022-08-16

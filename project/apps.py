@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_jwt import JWT
 from flask_restful import Api
-from .resources import Home, Item, Items
+from .resources import Home, Item, Items, SecretItems
 from .auth import authenticate, identity
 
 
@@ -80,6 +80,7 @@ def restful_app():
     myApi.add_resource(Home, '/')
     myApi.add_resource(Items, '/items')
     myApi.add_resource(Item, '/item/<string:id>')
+    myApi.add_resource(SecretItems, '/secret-items')
 
     return myApp
 
